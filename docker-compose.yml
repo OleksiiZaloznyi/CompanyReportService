@@ -1,0 +1,22 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:15.3
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 150595
+      POSTGRES_DB: demo
+    ports:
+      - "5432:5432"
+  demo-1:
+    build: .
+    container_name: demo-1
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/demo
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 150595
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
